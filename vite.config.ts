@@ -12,4 +12,8 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  cloudflare: process.env.VERCEL === "1" ? false : undefined,
 });
+
+
+
