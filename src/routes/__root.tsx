@@ -109,8 +109,34 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { useEffect, useState } from "react";
+import { syncAllFromSupabase } from "../lib/supabase-sync";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [isSynced, setIsSynced] = useState(false);
+
+  useEffect(() => {
+    syncAllFromSupabase().then(() => {
+      setIsSynced(true);
+    });
+  }, []);
+
+  if (!isSynced) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-4">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-4 border-amber-400/30 border-t-amber-400 rounded-full animate-spin mx-auto" />
+          <h2 className="text-lg font-black gold-text tracking-wide animate-pulse">
+            جاري مزامنة المصفوفة السحابية...
+          </h2>
+          <p className="text-xs text-muted-foreground">
+            يرجى الانتظار لحين مزامنة التغييرات المحلية مع قاعدة بيانات Supabase.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -118,3 +144,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+

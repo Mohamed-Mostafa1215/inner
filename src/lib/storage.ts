@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { syncValueToSupabase } from "./supabase-sync";
 
 export function useLocalStorage<T>(key: string, initial: T) {
   const [value, setValue] = useState<T>(() => {
@@ -15,6 +16,8 @@ export function useLocalStorage<T>(key: string, initial: T) {
     if (typeof window === "undefined") return;
     try {
       localStorage.setItem(key, JSON.stringify(value));
+      // Sync to Supabase in background
+      syncValueToSupabase(key, value);
     } catch {
       // ignore quota errors
     }
@@ -22,3 +25,4 @@ export function useLocalStorage<T>(key: string, initial: T) {
 
   return [value, setValue] as const;
 }
+

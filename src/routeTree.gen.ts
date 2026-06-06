@@ -9,13 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WeeklyRouteImport } from './routes/weekly'
 import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as IdentitiesRouteImport } from './routes/identities'
 import { Route as ExercisesRouteImport } from './routes/exercises'
+import { Route as DecisionRouteImport } from './routes/decision'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ForcesIndexRouteImport } from './routes/forces/index'
+import { Route as ForcesForceKeyRouteImport } from './routes/forces/$forceKey'
 
+const WeeklyRoute = WeeklyRouteImport.update({
+  id: '/weekly',
+  path: '/weekly',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProtocolRoute = ProtocolRouteImport.update({
   id: '/protocol',
   path: '/protocol',
@@ -36,6 +46,16 @@ const ExercisesRoute = ExercisesRouteImport.update({
   path: '/exercises',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DecisionRoute = DecisionRouteImport.update({
+  id: '/decision',
+  path: '/decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssessmentRoute = AssessmentRouteImport.update({
   id: '/assessment',
   path: '/assessment',
@@ -46,70 +66,122 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForcesIndexRoute = ForcesIndexRouteImport.update({
+  id: '/forces/',
+  path: '/forces/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForcesForceKeyRoute = ForcesForceKeyRouteImport.update({
+  id: '/forces/$forceKey',
+  path: '/forces/$forceKey',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/dashboard': typeof DashboardRoute
+  '/decision': typeof DecisionRoute
   '/exercises': typeof ExercisesRoute
   '/identities': typeof IdentitiesRoute
   '/journal': typeof JournalRoute
   '/protocol': typeof ProtocolRoute
+  '/weekly': typeof WeeklyRoute
+  '/forces/$forceKey': typeof ForcesForceKeyRoute
+  '/forces/': typeof ForcesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/dashboard': typeof DashboardRoute
+  '/decision': typeof DecisionRoute
   '/exercises': typeof ExercisesRoute
   '/identities': typeof IdentitiesRoute
   '/journal': typeof JournalRoute
   '/protocol': typeof ProtocolRoute
+  '/weekly': typeof WeeklyRoute
+  '/forces/$forceKey': typeof ForcesForceKeyRoute
+  '/forces': typeof ForcesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/dashboard': typeof DashboardRoute
+  '/decision': typeof DecisionRoute
   '/exercises': typeof ExercisesRoute
   '/identities': typeof IdentitiesRoute
   '/journal': typeof JournalRoute
   '/protocol': typeof ProtocolRoute
+  '/weekly': typeof WeeklyRoute
+  '/forces/$forceKey': typeof ForcesForceKeyRoute
+  '/forces/': typeof ForcesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/assessment'
+    | '/dashboard'
+    | '/decision'
     | '/exercises'
     | '/identities'
     | '/journal'
     | '/protocol'
+    | '/weekly'
+    | '/forces/$forceKey'
+    | '/forces/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/assessment'
+    | '/dashboard'
+    | '/decision'
     | '/exercises'
     | '/identities'
     | '/journal'
     | '/protocol'
+    | '/weekly'
+    | '/forces/$forceKey'
+    | '/forces'
   id:
     | '__root__'
     | '/'
     | '/assessment'
+    | '/dashboard'
+    | '/decision'
     | '/exercises'
     | '/identities'
     | '/journal'
     | '/protocol'
+    | '/weekly'
+    | '/forces/$forceKey'
+    | '/forces/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssessmentRoute: typeof AssessmentRoute
+  DashboardRoute: typeof DashboardRoute
+  DecisionRoute: typeof DecisionRoute
   ExercisesRoute: typeof ExercisesRoute
   IdentitiesRoute: typeof IdentitiesRoute
   JournalRoute: typeof JournalRoute
   ProtocolRoute: typeof ProtocolRoute
+  WeeklyRoute: typeof WeeklyRoute
+  ForcesForceKeyRoute: typeof ForcesForceKeyRoute
+  ForcesIndexRoute: typeof ForcesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/weekly': {
+      id: '/weekly'
+      path: '/weekly'
+      fullPath: '/weekly'
+      preLoaderRoute: typeof WeeklyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/protocol': {
       id: '/protocol'
       path: '/protocol'
@@ -138,6 +210,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExercisesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/decision': {
+      id: '/decision'
+      path: '/decision'
+      fullPath: '/decision'
+      preLoaderRoute: typeof DecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assessment': {
       id: '/assessment'
       path: '/assessment'
@@ -152,17 +238,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forces/': {
+      id: '/forces/'
+      path: '/forces'
+      fullPath: '/forces/'
+      preLoaderRoute: typeof ForcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forces/$forceKey': {
+      id: '/forces/$forceKey'
+      path: '/forces/$forceKey'
+      fullPath: '/forces/$forceKey'
+      preLoaderRoute: typeof ForcesForceKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssessmentRoute: AssessmentRoute,
+  DashboardRoute: DashboardRoute,
+  DecisionRoute: DecisionRoute,
   ExercisesRoute: ExercisesRoute,
   IdentitiesRoute: IdentitiesRoute,
   JournalRoute: JournalRoute,
   ProtocolRoute: ProtocolRoute,
+  WeeklyRoute: WeeklyRoute,
+  ForcesForceKeyRoute: ForcesForceKeyRoute,
+  ForcesIndexRoute: ForcesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -63,9 +63,10 @@ function Index() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {FORCES.map((f) => (
-            <article
+            <Link
               key={f.key}
-              className="card-elevated rounded-xl p-5 hover:translate-y-[-2px] transition-transform"
+              to={`/forces/${f.key}`}
+              className="card-elevated rounded-xl p-5 hover:translate-y-[-2px] hover:gold-border transition-all block text-start group"
             >
               <div className="flex items-start justify-between mb-3">
                 <div
@@ -77,36 +78,74 @@ function Index() {
                   {f.level}
                 </span>
               </div>
-              <h3 className="text-xl font-bold">{f.name}</h3>
+              <h3 className="text-xl font-bold group-hover:text-amber-400 transition-colors">{f.name}</h3>
               <p className="text-sm text-primary mb-2">{f.subtitle}</p>
               <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-              <div className="mt-3 pt-3 border-t border-border/60 text-xs text-muted-foreground">
-                <span className="text-foreground">الدور:</span> {f.role}
+              <div className="mt-3 pt-3 border-t border-border/60 text-xs text-muted-foreground flex justify-between items-center">
+                <span>
+                  <strong className="text-foreground">الدور:</strong> {f.role}
+                </span>
+                <span className="text-amber-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  تفاصيل ←
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="grid md:grid-cols-2 gap-4">
-        <Link
-          to="/exercises"
-          className="card-elevated rounded-xl p-6 hover:gold-border transition-all"
-        >
-          <h3 className="text-xl font-bold mb-2">التمارين العملية</h3>
-          <p className="text-sm text-muted-foreground">
-            قاعدة الـ 5 ثوانٍ، الـ 10 دقائق، البدائل الثلاثة، تفريغ العمق…
-          </p>
-        </Link>
-        <Link
-          to="/identities"
-          className="card-elevated rounded-xl p-6 hover:gold-border transition-all"
-        >
-          <h3 className="text-xl font-bold mb-2">الهويات الأربع</h3>
-          <p className="text-sm text-muted-foreground">
-            المحارب، القائد، صانع المشروع، الروحي العملي — استدعِ الهوية المناسبة للموقف.
-          </p>
-        </Link>
+      <section className="mb-8">
+        <h2 className="text-2xl font-bold mb-1">الأدوات التنفيذية</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          انتقل إلى أي من الأقسام المتقدمة للتدريب والقياس اليومي.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Link
+            to="/exercises"
+            className="card-elevated rounded-xl p-6 hover:gold-border transition-all block text-start"
+          >
+            <h3 className="text-xl font-bold mb-2">التمارين العملية</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              قاعدة الـ 5 ثوانٍ، الـ 10 دقائق، البدائل الثلاثة، تفريغ العمق…
+            </p>
+          </Link>
+          <Link
+            to="/identities"
+            className="card-elevated rounded-xl p-6 hover:gold-border transition-all block text-start"
+          >
+            <h3 className="text-xl font-bold mb-2">الهويات الأربع</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              المحارب، القائد، صانع المشروع، الروحي العملي — استدعِ الهوية المناسبة للموقف.
+            </p>
+          </Link>
+          <Link
+            to="/decision"
+            className="card-elevated rounded-xl p-6 hover:gold-border transition-all block text-start"
+          >
+            <h3 className="text-xl font-bold mb-2">القرار المتكامل</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              بروتوكول اتخاذ القرار السيادي عبر ربط ومزامنة القوى الخمس بوعي وحسم.
+            </p>
+          </Link>
+          <Link
+            to="/weekly"
+            className="card-elevated rounded-xl p-6 hover:gold-border transition-all block text-start"
+          >
+            <h3 className="text-xl font-bold mb-2">الجدول الأسبوعي</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              توزيع المهام اليومية المتخصصة لتفعيل الهوية المطلوبة حسب اليوم.
+            </p>
+          </Link>
+          <Link
+            to="/dashboard"
+            className="card-elevated rounded-xl p-6 hover:gold-border transition-all block text-start sm:col-span-2 lg:col-span-1"
+          >
+            <h3 className="text-xl font-bold mb-2">لوحة القياس</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              متابعة رسومات بيانية لتطور قواك، ومزاجك اليومي، وتكرار سلوك الغرائز.
+            </p>
+          </Link>
+        </div>
       </section>
     </Shell>
   );
