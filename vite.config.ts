@@ -13,13 +13,14 @@ const isVercel = process.env.VERCEL?.trim() === "1";
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 export default defineConfig({
   tanstackStart: {
-    server: { entry: "server" },
+    server: isVercel ? undefined : { entry: "server" },
   },
   cloudflare: isVercel ? false : undefined,
   plugins: [
     isVercel ? nitro({ preset: "vercel" }) : undefined
   ].filter(Boolean),
 });
+
 
 
 
